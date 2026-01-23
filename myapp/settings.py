@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-91&yw9%cf!(wes+^vs$^cbd#8wx2-ccl%703#-*s=sw_@a#4dk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['sudalaiyandi.pythonanywhere.com', '127.0.0.1', 'localhost']
 
@@ -115,30 +115,19 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
-# Media files (Images, etc)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 import os
-from pathlib import Path
 
-# BASE_DIR already unga settings-la mela irukkum, athai use pannikonga
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
-
-# Ithu thaan namma server-kaaga add panna puthu line
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Extra static folders (neenga project-la 'static' nu oru folder vachiruntha)
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# Media files (User upload panra photos/logos)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
