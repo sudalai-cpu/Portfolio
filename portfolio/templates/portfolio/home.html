@@ -277,9 +277,7 @@
                         class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-card p-6 rounded-2xl border border-slate-800 shadow-xl group-hover:border-primary/50 transition-all duration-300 hover:-translate-y-1">
                         <div class="flex items-center justify-between space-x-2 mb-1">
                             <h3 class="font-bold text-white text-lg">{{ edu.institution }}</h3>
-                            <time class="font-caveat font-medium text-emerald-500 text-sm whitespace-nowrap">{{
-                                edu.start_date|date:"Y" }} - {% if edu.end_date %}{{ edu.end_date|date:"Y" }}{% else
-                                %}Present{% endif %}</time>
+                            <time class="font-caveat font-medium text-emerald-500 text-sm whitespace-nowrap">{{ edu.start_date|date:"Y" }} - {% if edu.end_date %}{{ edu.end_date|date:"Y" }}{% else %}Present{% endif %}/time>
                         </div>
                         <div class="font-medium text-primary mb-2">{{ edu.degree }}</div>
                         <div class="text-secondaryText text-sm">
