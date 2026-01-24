@@ -55,6 +55,105 @@
             margin: 0 !important;
             display: block !important;
         }
+
+        /* Profile Photo Background Animations */
+        @keyframes morph {
+            0% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                transform: scale(1) rotate(0deg);
+            }
+
+            50% {
+                border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            100% {
+                border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .blob-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 110%;
+            height: 110%;
+            z-index: 0;
+            filter: blur(40px);
+        }
+
+        .blob {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+            animation: morph 8s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        .blob-secondary {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            animation: morph 12s ease-in-out infinite reverse;
+            opacity: 0.4;
+            filter: blur(30px);
+        }
+
+        /* Unique GitHub Button Styles */
+        .github-btn {
+            background-color: #0d1117 !important;
+            border: 1px solid #30363d !important;
+            border-radius: 9999px !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.75rem;
+            color: #f0f6fc;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+        }
+
+        .github-btn:hover {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            color: #fff;
+            transform: translateY(-3px);
+            background-color: #161b22 !important;
+        }
+
+        .github-btn:hover i {
+            animation: rotate360 0.8s ease-in-out;
+        }
+
+        @keyframes rotate360 {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -186,25 +285,40 @@
                                 Check resume
                             </a>
                             {% endif %}
-                            <button
+
+                            {% if home.github_url %}
+                            <a href="{{ home.github_url }}" target="_blank" rel="noopener noreferrer"
+                                class="github-btn shadow-xl">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                                <span>GitHub</span>
+                            </a>
+                            {% endif %}
+
+                            <!--button
                                 class="bg-transparent border border-gray-700 hover:border-gray-500 text-text font-semibold rounded-xl px-8 py-3 transition-all duration-300 hover:bg-white/5"
                                 onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})">
                                 About Me
-                            </button>
+                            </button-->
                         </div>
                     </div>
 
                     <!-- Right Column: Profile Photo -->
                     <div class="w-full lg:w-1/2 flex justify-center lg:justify-end">
                         <div class="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-[450px] lg:h-[450px]">
-                            <!-- Glow Effect -->
-                            <div class="absolute -inset-4 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
+                            <!-- Animated Background Design -->
+                            <div class="blob-container animate-pulse">
+                                <div class="blob"></div>
+                                <div class="blob-secondary"></div>
+                            </div>
+
+                            <!-- Soft Glow Decoration -->
+                            <div class="absolute -inset-10 bg-primary/20 rounded-full blur-[100px] opacity-50"></div>
 
                             <!-- Image Container -->
                             <div
-                                class="relative w-full h-full rounded-full overflow-hidden border-4 border-card shadow-2xl bg-card flex items-center justify-center">
+                                class="relative z-10 w-full h-full rounded-full overflow-hidden border-8 border-background/50 backdrop-blur-sm shadow-2xl bg-card/20 flex items-center justify-center transition-transform duration-500 hover:scale-[1.02]">
                                 <div
-                                    class="w-full h-full bg-gray-800 flex items-center justify-center text-secondaryText overflow-hidden">
+                                    class="w-full h-full bg-slate-900 flex items-center justify-center overflow-hidden">
                                     {% if home.profile_photo %}
                                     <img src="{{ home.profile_photo.url }}" alt="{{ home.name }}"
                                         class="w-full h-full object-cover">
@@ -220,6 +334,10 @@
                                     </div>
                                     {% endif %}
                                 </div>
+                            </div>
+
+                            <!-- Overlapping Glassmorphism Border Decoration -->
+                            <div class="absolute inset-0 rounded-full border border-white/10 z-20 pointer-events-none">
                             </div>
                         </div>
                     </div>
