@@ -63,15 +63,83 @@
                     class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">Contact</a>
             </nav>
 
-            <!-- Mobile Menu Button (Simple implementation) -->
-            <button class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
         </div>
+
+        <!-- Backdrop -->
+        <div id="sidebar-backdrop"
+            class="fixed inset-0 bg-black/60 hidden z-[90] backdrop-blur-sm transition-opacity duration-300 opacity-0">
+        </div>
+
+        <!-- Right Sidebar Menu -->
+        <div id="mobile-menu"
+            class="fixed inset-y-0 right-0 w-72 bg-[#020617] border-l border-slate-800 z-[100] transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+            <!-- Sidebar Header -->
+            <div class="h-20 px-6 flex items-center justify-between border-b border-slate-800">
+                <span class="text-lg font-semibold text-white">Menu</span>
+                <button id="close-menu-button" class="text-gray-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <!-- Sidebar Links -->
+            <nav class="flex flex-col p-6 space-y-4">
+                <a href="#home"
+                    class="text-gray-300 hover:text-primary transition-colors mobile-link block py-2 text-lg">Home</a>
+                <a href="#about"
+                    class="text-gray-300 hover:text-primary transition-colors mobile-link block py-2 text-lg">About</a>
+                <a href="#projects"
+                    class="text-gray-300 hover:text-primary transition-colors mobile-link block py-2 text-lg">Projects</a>
+                <a href="{% url 'contact' %}"
+                    class="text-gray-300 hover:text-primary transition-colors mobile-link block py-2 text-lg">Contact</a>
+            </nav>
+        </div>
     </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('mobile-menu-button');
+            const closeButton = document.getElementById('close-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            const openMenu = () => {
+                mobileMenu.classList.remove('translate-x-full');
+                backdrop.classList.remove('hidden');
+                setTimeout(() => backdrop.classList.add('opacity-100'), 10);
+                document.body.style.overflow = 'hidden';
+            };
+
+            const closeMenu = () => {
+                mobileMenu.classList.add('translate-x-full');
+                backdrop.classList.remove('opacity-100');
+                setTimeout(() => {
+                    if (mobileMenu.classList.contains('translate-x-full')) {
+                        backdrop.classList.add('hidden');
+                    }
+                }, 300);
+                document.body.style.overflow = '';
+            };
+
+            menuButton.addEventListener('click', openMenu);
+            closeButton.addEventListener('click', closeMenu);
+            backdrop.addEventListener('click', closeMenu);
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+        });
+    </script>
 
     <!-- Main Content (Hero Section & Future Sections) -->
     <main class="flex-grow flex flex-col justify-center">
