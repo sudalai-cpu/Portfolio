@@ -4,8 +4,18 @@ from django.db import models
 class Home(models.Model):
     name = models.CharField(max_length=100)
     greetings_text = models.CharField(max_length=100)
+    sub_heading = models.CharField(max_length=200, default="I am a Full Stack Developer")
     bio = models.TextField()
     profile_photo = models.ImageField(upload_to='profile/')
+    resume = models.FileField(upload_to='resumes/', null=True, blank=True)
+    
+    # Social Media & Contact Info
+    email_address = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    whatsapp_number = models.CharField(max_length=20, blank=True, null=True)
+    linkedin_url = models.URLField(blank=True, null=True)
+    instagram_url = models.URLField(blank=True, null=True)
+    github_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.name
