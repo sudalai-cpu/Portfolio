@@ -13,3 +13,17 @@ def home(request):
         'education': education
     }
     return render(request, 'portfolio/home.html', context)
+
+from .forms import ContactForm
+from django.shortcuts import redirect
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = ContactForm()
+    
+    return render(request, 'portfolio/contact.html', {'form': form})
