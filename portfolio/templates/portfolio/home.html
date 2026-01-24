@@ -149,25 +149,32 @@
 
             {% regroup skills by category as skill_list %}
 
-            <div class="space-y-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {% for category in skill_list %}
-                <div>
-                    <h3 class="text-2xl font-semibold text-primary mb-8 border-b border-gray-800 pb-2 inline-block">
+                <div
+                    class="bg-card/50 backdrop-blur-sm border border-slate-800 rounded-3xl p-8 hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 group">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-primary rounded-full"></span>
                         {{ category.grouper }}
                     </h3>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
                         {% for skill in category.list %}
                         <div
-                            class="group relative bg-card rounded-2xl p-6 border border-slate-800 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10 flex flex-col items-center justify-center space-y-4">
-                            <div class="w-16 h-16 relative flex items-center justify-center">
+                            class="flex flex-col items-center justify-center p-2 rounded-xl bg-background/50 border border-slate-700/50 hover:border-primary/50 hover:bg-slate-800/50 transition-all duration-300 group/item">
+                            <div class="w-[42px] h-[42px] mb-1.5 relative flex items-center justify-center">
                                 {% if skill.logo %}
                                 <img src="{{ skill.logo.url }}" alt="{{ skill.name }}"
-                                    class="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300">
+                                    class="w-full h-full object-contain">
                                 {% else %}
-                                <div class="w-12 h-12 bg-gray-700 rounded-full"></div>
+                                <div
+                                    class="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center text-[10px] text-slate-400">
+                                    N/A
+                                </div>
                                 {% endif %}
                             </div>
-                            <span class="font-medium text-gray-300 group-hover:text-white transition-colors">
+                            <span
+                                class="text-xs font-medium text-slate-400 group-hover/item:text-white transition-colors text-center">
                                 {{ skill.name }}
                             </span>
                         </div>
