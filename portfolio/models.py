@@ -6,6 +6,7 @@ class Home(models.Model):
     greetings_text = models.CharField(max_length=100)
     bio = models.TextField()
     profile_photo = models.ImageField(upload_to='profile/')
+    resume = models.FileField(upload_to='resumes/', null=True, blank=True)
 
     def __str__(self):
         return self.name
