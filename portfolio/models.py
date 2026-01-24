@@ -7,6 +7,14 @@ class Home(models.Model):
     bio = models.TextField()
     profile_photo = models.ImageField(upload_to='profile/')
     resume = models.FileField(upload_to='resumes/', null=True, blank=True)
+    
+    # Social Media & Contact Info
+    email_address = models.EmailField(blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    whatsapp_number = models.CharField(max_length=20, blank=True, null=True)
+    linkedin_url = models.URLField(blank=True, null=True)
+    instagram_url = models.URLField(blank=True, null=True)
+    github_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.name

@@ -18,6 +18,7 @@ from .forms import ContactForm
 from django.shortcuts import redirect
 
 def contact(request):
+    home_data = Home.objects.first()
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -26,4 +27,4 @@ def contact(request):
     else:
         form = ContactForm()
     
-    return render(request, 'portfolio/contact.html', {'form': form})
+    return render(request, 'portfolio/contact.html', {'form': form, 'home': home_data})
