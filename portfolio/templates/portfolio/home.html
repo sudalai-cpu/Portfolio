@@ -154,6 +154,49 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* Typewriter Effect Styles */
+        .typewriter-container {
+            display: inline-block;
+        }
+
+        .typewriter-text {
+            border-right: 3px solid #3b82f6;
+            white-space: nowrap;
+            overflow: hidden;
+            letter-spacing: 0.1rem;
+            margin: 0 auto;
+            animation:
+                typing 3.5s steps(40, end),
+                blink-caret 0.75s step-end infinite;
+            background: linear-gradient(to right, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Inter', sans-serif;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: #3b82f6;
+            }
+        }
     </style>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -270,9 +313,14 @@
                     <!-- Left Column: Content -->
                     <div class="w-full lg:w-1/2 flex flex-col items-start space-y-8 animate-fade-in-up">
                         <div class="space-y-4">
-                            <h1 class="text-5xl lg:text-7xl font-bold tracking-tight text-white leading-tight">
+                            <h1 class="text-4xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
                                 {{ home.name|default:"Sudalaiyandi" }}
                             </h1>
+                            <div class="typewriter-container">
+                                <p class="typewriter-text text-xl md:text-2xl font-semibold">
+                                    {{ home.sub_heading|default:"I am a Full Stack Developer" }}
+                                </p>
+                            </div>
                             <p class="text-xl text-secondaryText font-medium max-w-lg leading-relaxed">
                                 {% if home.bio %}{{ home.bio|safe }}{% else %}Passionate Developer...{% endif %}
                             </p>
