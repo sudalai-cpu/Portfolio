@@ -7,6 +7,7 @@ class Home(models.Model):
     sub_heading = models.CharField(max_length=200, default="I am a Full Stack Developer")
     bio = models.TextField()
     profile_photo = models.ImageField(upload_to='profile/')
+    logo = models.ImageField(upload_to='logo/', null=True, blank=True)
     resume = models.FileField(upload_to='resumes/', null=True, blank=True)
     
     # Social Media & Contact Info
