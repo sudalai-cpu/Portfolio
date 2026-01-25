@@ -22,13 +22,18 @@ class Home(models.Model):
         return self.name
 
 class Category(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
 
     class Meta:
         verbose_name_plural = "Categories"
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        # Normalize to Title Case (e.g., 'frontend' -> 'Frontend')
+        self.name = self.name.title().strip()
+        super().save(*args, **kwargs)
 
 class Skill(models.Model):
     name = models.CharField(max_length=100)
