@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Home, Skill, Project, Education
+from .models import Home, Skill, Project, Education, AboutSection
 
 def home(request):
     home_data = Home.objects.first()
@@ -16,6 +16,14 @@ def home(request):
 
 from .forms import ContactForm
 from django.shortcuts import redirect
+
+def about(request):
+    home_data = Home.objects.first()
+    sections = AboutSection.objects.all().order_by('order')
+    return render(request, 'portfolio/about.html', {
+        'home': home_data,
+        'sections': sections
+    })
 
 def contact(request):
     home_data = Home.objects.first()

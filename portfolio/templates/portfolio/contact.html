@@ -89,33 +89,23 @@
     <header
         class="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
         <div class="container mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
-            <!-- Brand & Back Button -->
-            <div class="flex items-center gap-4">
-                <a href="{% url 'home' %}"
-                    class="flex items-center justify-center w-10 h-10 rounded-full bg-card border border-slate-800 text-gray-400 hover:text-white hover:border-primary/50 transition-all"
-                    title="Back to Home">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </a>
-                <a href="{% url 'home' %}" class="flex items-center hover:opacity-100 transition-opacity">
-                    {% if home.logo %}
-                    <img src="{{ home.logo.url }}" alt="Logo" class="nav-logo">
-                    {% else %}
-                    <span
-                        class="text-xl md:text-2xl font-semibold text-gray-200 tracking-tight hover:text-white transition-colors">
-                        {% if home.name %}{{ home.name }}{% else %}Hi, I’m Sudalaiyandi{% endif %}
-                    </span>
-                    {% endif %}
-                </a>
-            </div>
+            <!-- Brand -->
+            <a href="{% url 'home' %}" class="flex items-center hover:opacity-100 transition-opacity">
+                {% if home.logo %}
+                <img src="{{ home.logo.url }}" alt="Logo" class="nav-logo">
+                {% else %}
+                <span
+                    class="text-xl md:text-2xl font-semibold text-gray-200 tracking-tight hover:text-white transition-colors">
+                    {{ home.name|default:"Sudalaiyandi" }}
+                </span>
+                {% endif %}
+            </a>
 
             <!-- Desktop Navigation -->
             <nav class="hidden md:flex items-center space-x-8">
                 <a href="{% url 'home' %}"
                     class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">Home</a>
-                <a href="{% url 'home' %}#about"
+                <a href="{% url 'about' %}"
                     class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">About</a>
                 <a href="{% url 'home' %}#projects"
                     class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">Projects</a>
@@ -158,7 +148,7 @@
                     class="text-white hover:text-primary transition-all mobile-link flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-white/5 text-lg font-bold">
                     <i data-lucide="home" class="w-5 h-5"></i> Home
                 </a>
-                <a href="{% url 'home' %}#about"
+                <a href="{% url 'about' %}"
                     class="text-white hover:text-primary transition-all mobile-link flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-white/5 text-lg font-bold">
                     <i data-lucide="user" class="w-5 h-5"></i> About
                 </a>

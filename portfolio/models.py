@@ -16,10 +16,28 @@ class Home(models.Model):
     whatsapp_number = models.CharField(max_length=20, blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
     instagram_url = models.URLField(blank=True, null=True)
-    github_url = models.URLField(blank=True, null=True)
+    about_summary = models.TextField(max_length=500, blank=True, null=True, help_text="A quick 2-line bio for the About page")
 
     def __str__(self):
         return self.name
+
+class AboutSection(models.Model):
+    heading = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    points = models.TextField(help_text="Enter bullet points separated by a new line or pipe |")
+    icon = models.CharField(max_length=50, blank=True, help_text="FontAwesome icon class (e.g., 'fas fa-code')")
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.heading
+
+    def get_points(self):
+        if "|" in self.points:
+            return [p.strip() for p in self.points.split("|") if p.strip()]
+        return [p.strip() for p in self.points.split("\n") if p.strip()]
 
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)

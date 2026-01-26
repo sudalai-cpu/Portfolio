@@ -22,3 +22,14 @@ class ContactTest(TestCase):
         # Verify message is saved
         self.assertEqual(Contact.objects.count(), 1)
         self.assertEqual(Contact.objects.first().name, 'Test User')
+
+    def test_about_page_loads(self):
+        from .models import Home, AboutSection
+        Home.objects.create(name="Test User", bio="Bio summary", about_summary="About summary")
+        AboutSection.objects.create(heading="Test Section", points="Point 1|Point 2")
+        client = Client()
+        response = client.get(reverse('about'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "About summary")
+        self.assertContains(response, "Test Section")
+        self.assertContains(response, "Point 1")

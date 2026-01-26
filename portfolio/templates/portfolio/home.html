@@ -247,7 +247,7 @@
             <nav class="hidden md:flex items-center space-x-8">
                 <a href="#home"
                     class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">Home</a>
-                <a href="#about"
+                <a href="{% url 'about' %}"
                     class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">About</a>
                 <a href="#projects"
                     class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">Projects</a>
@@ -290,7 +290,7 @@
                     class="text-white hover:text-primary transition-all mobile-link flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-white/5 text-lg font-bold">
                     <i data-lucide="home" class="w-5 h-5"></i> Home
                 </a>
-                <a href="#about"
+                <a href="{% url 'about' %}"
                     class="text-white hover:text-primary transition-all mobile-link flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-white/5 text-lg font-bold">
                     <i data-lucide="user" class="w-5 h-5"></i> About
                 </a>
