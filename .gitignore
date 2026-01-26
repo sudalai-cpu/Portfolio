@@ -1,0 +1,21 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django sensitive files
+db.sqlite3
+.env
+
+# Media and Static
+/static/
+/staticfiles/
+/media/
+
+# Environment
+env/
+venv/
+.venv/
+
+# OS files
+.DS_Store

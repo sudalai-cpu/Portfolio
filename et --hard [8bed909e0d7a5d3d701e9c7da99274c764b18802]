@@ -1,0 +1,25 @@
+[33m7b28b86[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Clean restore: Code only, no libraries
+[33me37e016[m al
+[33m55b949d[m[33m ([m[1;31morigin/main[m[33m)[m RESTORING ALL FILES - OVERRIDING DELETIONS
+[33mbf39387[m Confirmed about.html fix
+[33m73cbd75[m Fixed gitignore and tracking all project files
+[33m8bed909[m about page updates
+[33m849bd9c[m fixed: moved gitignore to root and untracked database
+[33m96244ad[m skill category error fixed
+[33macfd4a5[m menu bar issue fixed for mobile
+[33m0e435e1[m add new feild for codefolio logo
+[33ma7cdad3[m add new sub name feild and update css
+[33ma2b24fc[m contact works
+[33mb141fda[m CSS updates for portfolio
+[33m20da5eb[m add footer icons and new fields added for the icons
+[33m266672f[m add resume feature
+[33mcb05d49[m bug clear
+[33ma37b5df[m navbar prblm fixed
+[33m5bb1f7b[m skill sections updates
+[33mccd3d43[m added new contact form
+[33m88fd070[m deployement ready
+[33m8490312[m update settings for deployement
+[33m4821b8a[m sml change
+[33mf688746[m add education sections
+[33m05c038f[m add skill section , fixed the small bug
+[33m29e0b95[m first commit
