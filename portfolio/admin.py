@@ -6,7 +6,7 @@ from .models import Home, Skill, Category, Project, Education, Contact, AboutSec
 @admin.register(Home)
 class HomeAdmin(admin.ModelAdmin):
     list_display = ('name', 'greetings_text', 'sub_heading')
-    fields = ('name', 'greetings_text', 'sub_heading', 'bio', 'about_summary', 'profile_photo', 'logo', 'resume', 'email_address', 'phone_number', 'whatsapp_number', 'linkedin_url', 'instagram_url')
+    fields = ('name', 'greetings_text', 'sub_heading', 'bio', 'about_summary', 'profile_photo', 'logo', 'resume', 'email_address', 'phone_number', 'whatsapp_number', 'linkedin_url', 'instagram_url', 'github_url')
 
 @admin.register(AboutSection)
 class AboutSectionAdmin(admin.ModelAdmin):

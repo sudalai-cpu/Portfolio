@@ -16,6 +16,7 @@ class Home(models.Model):
     whatsapp_number = models.CharField(max_length=20, blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
     instagram_url = models.URLField(blank=True, null=True)
+    github_url = models.URLField(blank=True, null=True, help_text="Link to your GitHub profile")
     about_summary = models.TextField(max_length=500, blank=True, null=True, help_text="A quick 2-line bio for the About page")
 
     def __str__(self):
