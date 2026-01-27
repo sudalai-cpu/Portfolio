@@ -1,238 +1,58 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'portfolio/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me | {{ home.name }}</title>
+{% block title %}About Me | {{ home.name }}{% endblock %}
 
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+{% block extra_css %}
+.glass-card {
+background: rgba(15, 23, 42, 0.6);
+backdrop-filter: blur(12px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+{% endblock %}
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        background: '#020617',
-                        card: '#0f172a',
-                        primary: '#3b82f6',
-                        text: '#e5e7eb',
-                        secondaryText: '#94a3b8',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
+{% block content %}
+<main class="flex-grow">
+    <div class="container mx-auto max-w-6xl px-6 py-20">
+        <header class="text-center mb-20 animate-fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">About Me</h1>
+            <p class="text-xl text-secondaryText max-w-2xl mx-auto leading-relaxed">
+                {{ home.about_summary|default:"Passionately building applications..." }}
+            </p>
+        </header>
 
-        .nav-logo {
-            height: 65px;
-            width: auto;
-            object-fit: contain;
-            transition: all 0.3s ease;
-        }
-
-        .glass-card {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-    </style>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- FontAwesome for Section Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-
-<body class="bg-background text-text selection:bg-primary selection:text-white flex flex-col min-h-screen">
-
-    <!-- Navigation Header -->
-    <header
-        class="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
-        <div class="container mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
-            <!-- Brand -->
-            <a href="{% url 'home' %}" class="flex items-center hover:opacity-100 transition-opacity">
-                {% if home.logo %}
-                <img src="{{ home.logo.url }}" alt="Logo" class="nav-logo">
-                {% else %}
-                <span
-                    class="text-xl md:text-2xl font-semibold text-gray-200 tracking-tight hover:text-white transition-colors">
-                    {{ home.name|default:"Sudalaiyandi" }}
-                </span>
-                {% endif %}
-            </a>
-
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="{% url 'home' %}"
-                    class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">Home</a>
-                <a href="{% url 'about' %}"
-                    class="text-sm font-medium text-primary transition-colors duration-300">About</a>
-                <a href="{% url 'home' %}#projects"
-                    class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">Projects</a>
-                <a href="{% url 'contact' %}"
-                    class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">Contact</a>
-            </nav>
-
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-        </div>
-
-        <!-- Backdrop -->
-        <div id="sidebar-backdrop"
-            class="fixed inset-0 bg-black/60 hidden z-[90] backdrop-blur-sm transition-opacity duration-300 opacity-0">
-        </div>
-
-        <!-- Right Sidebar Menu -->
-        <div id="mobile-menu"
-            class="fixed inset-y-0 right-0 w-[280px] sm:w-[320px] bg-[#020617] border-l border-slate-800 z-[100] transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl invisible">
-            <div class="h-24 px-6 flex items-center justify-between border-b border-slate-800">
-                <span class="text-2xl font-bold text-white tracking-tight">Navigation</span>
-                <button id="close-menu-button"
-                    class="p-2 rounded-lg bg-slate-800 text-white hover:bg-slate-700 transition-all focus:ring-2 focus:ring-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <nav class="flex flex-col p-6 space-y-2">
-                <a href="{% url 'home' %}"
-                    class="text-white hover:text-primary transition-all mobile-link flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-white/5 text-lg font-bold">
-                    <i data-lucide="home" class="w-5 h-5"></i> Home
-                </a>
-                <a href="{% url 'about' %}"
-                    class="text-primary mobile-link flex items-center gap-4 py-4 px-4 rounded-xl bg-white/5 text-lg font-bold">
-                    <i data-lucide="user" class="w-5 h-5"></i> About
-                </a>
-                <a href="{% url 'home' %}#projects"
-                    class="text-white hover:text-primary transition-all mobile-link flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-white/5 text-lg font-bold">
-                    <i data-lucide="layout" class="w-5 h-5"></i> Projects
-                </a>
-                <a href="{% url 'contact' %}"
-                    class="text-white hover:text-primary transition-all mobile-link flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-white/5 text-lg font-bold">
-                    <i data-lucide="mail" class="w-5 h-5"></i> Contact
-                </a>
-            </nav>
-        </div>
-    </header>
-
-    <main class="flex-grow">
-        <div class="container mx-auto max-w-6xl px-6 py-20">
-            <header class="text-center mb-20 animate-fade-in">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">About Me</h1>
-                <p class="text-xl text-secondaryText max-w-2xl mx-auto leading-relaxed">
-                    
-                    A Python/Django developer focused on building clean, scalable, and reliable web applications.
-Passionate about continuous learning, teamwork, and solving real-world problems.
-                </p>
-            </header>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {% for section in sections %}
-                <article class="glass-card rounded-3xl p-8 hover:border-primary/50 transition-all duration-500 group">
-                    <div class="flex items-center gap-4 mb-6">
-                        {% if section.icon %}
-                        <div
-                            class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-xl group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                            <i class="{{ section.icon }}"></i>
-                        </div>
-                        {% endif %}
-                        <h2 class="text-2xl font-bold text-white">{{ section.heading }}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {% for section in sections %}
+            <article class="glass-card rounded-3xl p-8 hover:border-primary/50 transition-all duration-500 group">
+                <div class="flex items-center gap-4 mb-6">
+                    {% if section.icon %}
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-xl group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                        <i class="{{ section.icon }}"></i>
                     </div>
-
-                    {% if section.description %}
-                    <p class="text-secondaryText mb-6 leading-relaxed">{{ section.description }}</p>
                     {% endif %}
-
-                    <ul class="space-y-3">
-                        {% for point in section.get_points %}
-                        <li class="flex items-start gap-3 text-slate-300">
-                            <i class="fas fa-chevron-right text-primary mt-1 text-xs"></i>
-                            <span>{{ point }}</span>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </article>
-                {% endfor %}
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="py-12 border-t border-slate-800 bg-background mt-auto">
-        <div class="container mx-auto px-6 max-w-6xl">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-                <div class="text-center md:text-left">
-                    <p class="text-lg font-semibold text-white mb-1">{{ home.name|default:"Sudalaiyandi" }}</p>
-                    <p class="text-sm text-secondaryText">&copy; 2026. All rights reserved.</p>
+                    <h2 class="text-2xl font-bold text-white">{{ section.heading }}</h2>
                 </div>
-                <div class="flex gap-6">
-                    {% if home.linkedin_url %}<a href="{{ home.linkedin_url }}"
-                        class="text-secondaryText hover:text-white transition-colors"><i data-lucide="linkedin"
-                            class="w-6 h-6"></i></a>{% endif %}
-                    {% if home.github_url %}<a href="{{ home.github_url }}"
-                        class="text-secondaryText hover:text-white transition-colors"><i data-lucide="github"
-                            class="w-6 h-6"></i></a>{% endif %}
-                </div>
-            </div>
+
+                {% if section.description %}
+                <p class="text-secondaryText mb-6 leading-relaxed">{{ section.description }}</p>
+                {% endif %}
+
+                <ul class="space-y-3">
+                    {% for point in section.get_points %}
+                    <li class="flex items-start gap-3 text-slate-300">
+                        <i class="fas fa-chevron-right text-primary mt-1 text-xs"></i>
+                        <span>{{ point }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </article>
+            {% endfor %}
         </div>
-    </footer>
+    </div>
+</main>
+{% endblock %}
 
-    <script>
-        lucide.createIcons();
-
-        // Navbar Logic
-        const menuButton = document.getElementById('mobile-menu-button');
-        const closeButton = document.getElementById('close-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const backdrop = document.getElementById('sidebar-backdrop');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        const openMenu = () => {
-            mobileMenu.classList.remove('invisible');
-            mobileMenu.classList.remove('translate-x-full');
-            backdrop.classList.remove('hidden');
-            setTimeout(() => backdrop.classList.add('opacity-100'), 10);
-            document.body.style.overflow = 'hidden';
-        };
-
-        const closeMenu = () => {
-            mobileMenu.classList.add('translate-x-full');
-            backdrop.classList.remove('opacity-100');
-            setTimeout(() => {
-                if (mobileMenu.classList.contains('translate-x-full')) {
-                    backdrop.classList.add('hidden');
-                    mobileMenu.classList.add('invisible');
-                }
-            }, 300);
-            document.body.style.overflow = '';
-        };
-
-        menuButton.addEventListener('click', openMenu);
-        closeButton.addEventListener('click', closeMenu);
-        backdrop.addEventListener('click', closeMenu);
-        mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
-    </script>
-</body>
-
-</html>
+{% block extra_head %}
+<!-- FontAwesome for Section Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}

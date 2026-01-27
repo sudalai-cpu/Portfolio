@@ -1,335 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'portfolio/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Sudalaiyandi</title>
+{% block title %}Contact - Sudalaiyandi{% endblock %}
 
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+{% block content %}
+<!-- Main Content -->
+<main class="flex-grow flex items-center justify-center py-20 px-6">
+    <div class="w-full max-w-lg">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">Get in Touch</h1>
+            <p class="text-secondaryText text-lg">
+                Have a question or want to work together? Drop me a message!
+            </p>
+        </div>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        background: '#020617',
-                        card: '#0f172a',
-                        primary: '#3b82f6',
-                        text: '#e5e7eb',
-                        secondaryText: '#94a3b8',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
+        <form method="post" class="space-y-6 bg-card p-8 rounded-2xl border border-slate-800 shadow-xl"
+            action="https://formspree.io/f/mbdgppnk">
+            {% csrf_token %}
 
-        /* Exhaustive Icon Reset */
-        .skill-icon-container,
-        .skill-icon-container * {
-            background: transparent !important;
-            background-color: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            outline: none !important;
-        }
+            <div class="space-y-5">
+                <div>
+                    <label for="{{ form.name.id_for_label }}"
+                        class="block text-sm font-medium text-gray-300 mb-2">Name</label>
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
+                    {% endif %}
+                </div>
 
-        .skill-icon-img {
-            width: 60px !important;
-            height: 60px !important;
-            object-fit: contain !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            display: block !important;
-        }
+                <div>
+                    <label for="{{ form.email.id_for_label }}"
+                        class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.email.errors.0 }}</p>
+                    {% endif %}
+                </div>
 
-        /* Nav Logo Styling */
-        .nav-logo {
-            height: 60px;
-            width: auto;
-            max-height: none;
-            max-width: none;
-            object-fit: contain;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.2));
-            display: block;
-        }
+                <div>
+                    <label for="{{ form.message.id_for_label }}"
+                        class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                    {{ form.message }}
+                    {% if form.message.errors %}
+                    <p class="text-red-500 text-sm mt-1">{{ form.message.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
 
-        .nav-logo:hover {
-            transform: scale(1.05);
-            filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.4));
-        }
-
-        @media (min-width: 768px) {
-            .nav-logo {
-                height: 85px;
-            }
-        }
-    </style>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-
-<body class="bg-background text-text selection:bg-primary selection:text-white flex flex-col min-h-screen">
-
-    <!-- Navigation Header -->
-    <header
-        class="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
-        <div class="container mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
-            <!-- Brand -->
-            <a href="{% url 'home' %}" class="flex items-center hover:opacity-100 transition-opacity">
-                {% if home.logo %}
-                <img src="{{ home.logo.url }}" alt="Logo" class="nav-logo">
-                {% else %}
-                <span
-                    class="text-xl md:text-2xl font-semibold text-gray-200 tracking-tight hover:text-white transition-colors">
-                    {{ home.name|default:"Sudalaiyandi" }}
-                </span>
-                {% endif %}
-            </a>
-
-            <!-- Desktop Navigation -->
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="{% url 'home' %}"
-                    class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">Home</a>
-                <a href="{% url 'about' %}"
-                    class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">About</a>
-                <a href="{% url 'home' %}#projects"
-                    class="text-sm font-medium text-gray-300 hover:text-primary transition-colors duration-300">Projects</a>
-                <a href="{% url 'contact' %}"
-                    class="text-sm font-medium text-primary transition-colors duration-300">Contact</a>
-            </nav>
-
-            <!-- Mobile Menu Button -->
-            <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+            <button type="submit"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 hover:-translate-y-1">
+                Send Message
             </button>
-        </div>
-
-        <!-- Backdrop -->
-        <div id="sidebar-backdrop"
-            class="fixed inset-0 bg-black/60 hidden z-[90] backdrop-blur-sm transition-opacity duration-300 opacity-0">
-        </div>
-
-        <!-- Right Sidebar Menu -->
-        <div id="mobile-menu"
-            class="fixed inset-y-0 right-0 w-[280px] sm:w-[320px] bg-[#020617] border-l border-slate-800 z-[100] transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl invisible">
-            <!-- Sidebar Header -->
-            <div class="h-24 px-6 flex items-center justify-between border-b border-slate-800">
-                <span class="text-2xl font-bold text-white tracking-tight">Navigation</span>
-                <button id="close-menu-button"
-                    class="p-2 rounded-lg bg-slate-800 text-white hover:bg-slate-700 transition-all focus:ring-2 focus:ring-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-            <!-- Sidebar Links -->
-            <nav class="flex flex-col p-6 space-y-2">
-                <a href="{% url 'home' %}"
-                    class="text-white hover:text-primary transition-all mobile-link flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-white/5 text-lg font-bold">
-                    <i data-lucide="home" class="w-5 h-5"></i> Home
-                </a>
-                <a href="{% url 'about' %}"
-                    class="text-white hover:text-primary transition-all mobile-link flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-white/5 text-lg font-bold">
-                    <i data-lucide="user" class="w-5 h-5"></i> About
-                </a>
-                <a href="{% url 'home' %}#projects"
-                    class="text-white hover:text-primary transition-all mobile-link flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-white/5 text-lg font-bold">
-                    <i data-lucide="layout" class="w-5 h-5"></i> Projects
-                </a>
-                <a href="{% url 'contact' %}"
-                    class="text-white hover:text-primary transition-all mobile-link flex items-center gap-4 py-4 px-4 rounded-xl hover:bg-white/5 text-lg font-bold">
-                    <i data-lucide="mail" class="w-5 h-5"></i> Contact
-                </a>
-            </nav>
-        </div>
-    </header>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuButton = document.getElementById('mobile-menu-button');
-            const closeButton = document.getElementById('close-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const backdrop = document.getElementById('sidebar-backdrop');
-            const mobileLinks = document.querySelectorAll('.mobile-link');
-
-            const openMenu = () => {
-                mobileMenu.classList.remove('invisible');
-                mobileMenu.classList.remove('translate-x-full');
-                backdrop.classList.remove('hidden');
-                setTimeout(() => backdrop.classList.add('opacity-100'), 10);
-                document.body.style.overflow = 'hidden';
-            };
-
-            const closeMenu = () => {
-                mobileMenu.classList.add('translate-x-full');
-                backdrop.classList.remove('opacity-100');
-                setTimeout(() => {
-                    if (mobileMenu.classList.contains('translate-x-full')) {
-                        backdrop.classList.add('hidden');
-                        mobileMenu.classList.add('invisible');
-                    }
-                }, 300);
-                document.body.style.overflow = '';
-            };
-
-            menuButton.addEventListener('click', openMenu);
-            closeButton.addEventListener('click', closeMenu);
-            backdrop.addEventListener('click', closeMenu);
-
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', closeMenu);
-            });
-        });
-    </script>
-
-    <!-- Main Content -->
-    <main class="flex-grow flex items-center justify-center py-20 px-6">
-        <div class="w-full max-w-lg">
-            <div class="text-center mb-10">
-                <h1 class="text-3xl md:text-4xl font-bold text-white mb-4">Get in Touch</h1>
-                <p class="text-secondaryText text-lg">
-                    Have a question or want to work together? Drop me a message!
-                </p>
-            </div>
-
-            <form method="post" class="space-y-6 bg-card p-8 rounded-2xl border border-slate-800 shadow-xl"
-                action="https://formspree.io/f/mbdgppnk">
-                {% csrf_token %}
-
-                <div class="space-y-5">
-                    <div>
-                        <label for="{{ form.name.id_for_label }}"
-                            class="block text-sm font-medium text-gray-300 mb-2">Name</label>
-                        {{ form.name }}
-                        {% if form.name.errors %}
-                        <p class="text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="{{ form.email.id_for_label }}"
-                            class="block text-sm font-medium text-gray-300 mb-2">Email</label>
-                        {{ form.email }}
-                        {% if form.email.errors %}
-                        <p class="text-red-500 text-sm mt-1">{{ form.email.errors.0 }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <label for="{{ form.message.id_for_label }}"
-                            class="block text-sm font-medium text-gray-300 mb-2">Message</label>
-                        {{ form.message }}
-                        {% if form.message.errors %}
-                        <p class="text-red-500 text-sm mt-1">{{ form.message.errors.0 }}</p>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <button type="submit"
-                    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 hover:-translate-y-1">
-                    Send Message
-                </button>
-            </form>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="py-12 border-t border-slate-800 bg-background mt-auto">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-                <!-- Branding/Copyright -->
-                <div class="text-center md:text-left">
-                    {% if home.logo %}
-                    <img src="{{ home.logo.url }}" alt="Logo"
-                        class="h-12 md:h-16 w-auto object-contain mb-2 mx-auto md:mx-0"
-                        style="max-height: none !important;">
-                    {% else %}
-                    <p class="text-lg font-semibold text-white mb-1">{{ home.name|default:"Sudalaiyandi" }}</p>
-                    {% endif %}
-                    <p class="text-sm text-secondaryText">
-                        &copy; 2026. Built with Django & Tailwind.
-                    </p>
-                </div>
-
-                <!-- Social Media Links -->
-                <div class="flex flex-wrap justify-center gap-5">
-                    {% if home.phone_number %}
-                    <a href="tel:{{ home.phone_number }}"
-                        class="p-3 rounded-full bg-slate-800/50 border border-slate-700 text-gray-400 hover:text-blue-500 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-300"
-                        title="Call Me">
-                        <i data-lucide="phone" class="w-5 h-5"></i>
-                    </a>
-                    {% endif %}
-
-                    {% if home.email_address %}
-                    <a href="mailto:{{ home.email_address }}"
-                        class="p-3 rounded-full bg-slate-800/50 border border-slate-700 text-gray-400 hover:text-red-500 hover:border-red-500/50 hover:bg-red-500/10 transition-all duration-300"
-                        title="Email Me">
-                        <i data-lucide="mail" class="w-5 h-5"></i>
-                    </a>
-                    {% endif %}
-
-                    {% if home.linkedin_url %}
-                    <a href="{{ home.linkedin_url }}" target="_blank"
-                        class="p-3 rounded-full bg-slate-800/50 border border-slate-700 text-gray-400 hover:text-blue-600 hover:border-blue-600/50 hover:bg-blue-600/10 transition-all duration-300"
-                        title="LinkedIn">
-                        <i data-lucide="linkedin" class="w-5 h-5"></i>
-                    </a>
-                    {% endif %}
-
-                    {% if home.instagram_url %}
-                    <a href="{{ home.instagram_url }}" target="_blank"
-                        class="p-3 rounded-full bg-slate-800/50 border border-slate-700 text-gray-400 hover:text-pink-500 hover:border-pink-500/50 hover:bg-pink-500/10 transition-all duration-300"
-                        title="Instagram">
-                        <i data-lucide="instagram" class="w-5 h-5"></i>
-                    </a>
-                    {% endif %}
-
-                    {% if home.whatsapp_number %}
-                    <a href="https://wa.me/{{ home.whatsapp_number }}" target="_blank"
-                        class="p-3 rounded-full bg-slate-800/50 border border-slate-700 text-gray-400 hover:text-green-500 hover:border-green-500/50 hover:bg-green-500/10 transition-all duration-300"
-                        title="WhatsApp">
-                        <i data-lucide="message-circle" class="w-5 h-5"></i>
-                    </a>
-                    {% endif %}
-
-                    {% if home.github_url %}
-                    <a href="{{ home.github_url }}" target="_blank"
-                        class="p-3 rounded-full bg-slate-800/50 border border-slate-700 text-gray-400 hover:text-white hover:border-gray-500 hover:bg-white/10 transition-all duration-300"
-                        title="GitHub">
-                        <i data-lucide="github" class="w-5 h-5"></i>
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-    </script>
-
-</body>
-
-</html>
+        </form>
+    </div>
+</main>
+{% endblock %}
