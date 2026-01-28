@@ -2,6 +2,16 @@
 
 {% block title %}About Me | {{ home.name }}{% endblock %}
 
+{% block back_button %}
+<div class="max-w-7xl mx-auto px-6 pt-24 -mb-16">
+    <a href="{% url 'home' %}"
+        class="inline-flex items-center gap-2 text-slate-400 hover:text-blue-400 transition-colors group">
+        <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
+        <span>Back to Home</span>
+    </a>
+</div>
+{% endblock %}
+
 {% block extra_css %}
 .glass-card {
 background: rgba(15, 23, 42, 0.6);
