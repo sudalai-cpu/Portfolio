@@ -78,6 +78,31 @@
                 height: 85px;
             }
         }
+
+        /* Backdrop blur optimization and visibility */
+        #sidebar-backdrop {
+            will-change: opacity;
+            transition: opacity 0.3s ease, visibility 0.3s;
+        }
+
+        #sidebar-backdrop.hidden {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #sidebar-backdrop.visible {
+            display: block;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile Menu Optimization */
+        #mobile-menu {
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
     </style>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -86,8 +111,7 @@
 <body class="bg-background text-text selection:bg-primary selection:text-white flex flex-col min-h-screen">
 
     <!-- Navigation Header -->
-    <header
-        class="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
+    <header class="sticky top-0 z-50 bg-[#020617] border-b border-slate-800 transition-all duration-300">
         <div class="container mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
             <!-- Brand -->
             <a href="{% url 'home' %}" class="flex items-center hover:opacity-100 transition-opacity">
@@ -123,13 +147,12 @@
         </div>
 
         <!-- Backdrop -->
-        <div id="sidebar-backdrop"
-            class="fixed inset-0 bg-black/60 hidden z-[90] backdrop-blur-sm transition-opacity duration-300 opacity-0">
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-black/60 z-[90] backdrop-blur-sm hidden">
         </div>
 
         <!-- Right Sidebar Menu -->
         <div id="mobile-menu"
-            class="fixed inset-y-0 right-0 w-[280px] sm:w-[320px] bg-[#020617] border-l border-slate-800 z-[100] transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl invisible">
+            class="fixed inset-y-0 right-0 w-[280px] sm:w-[320px] bg-[#020617] border-l border-slate-700 z-[100] transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
             <!-- Sidebar Header -->
             <div class="h-24 px-6 flex items-center justify-between border-b border-slate-800">
                 <span class="text-2xl font-bold text-white tracking-tight">Navigation</span>
@@ -173,22 +196,23 @@
             const mobileLinks = document.querySelectorAll('.mobile-link');
 
             const openMenu = () => {
-                mobileMenu.classList.remove('invisible');
-                mobileMenu.classList.remove('translate-x-full');
                 backdrop.classList.remove('hidden');
-                setTimeout(() => backdrop.classList.add('opacity-100'), 10);
+                void backdrop.offsetWidth;
+                backdrop.classList.add('visible');
+
+                mobileMenu.classList.remove('translate-x-full');
                 document.body.style.overflow = 'hidden';
             };
 
             const closeMenu = () => {
                 mobileMenu.classList.add('translate-x-full');
-                backdrop.classList.remove('opacity-100');
+                backdrop.classList.remove('visible');
+
                 setTimeout(() => {
-                    if (mobileMenu.classList.contains('translate-x-full')) {
-                        backdrop.classList.add('hidden');
-                        mobileMenu.classList.add('invisible');
-                    }
+                    if (!mobileMenu.classList.contains('translate-x-full')) return;
+                    backdrop.classList.add('hidden');
                 }, 300);
+
                 document.body.style.overflow = '';
             };
 
