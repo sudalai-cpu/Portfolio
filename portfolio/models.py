@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class Home(models.Model):
     name = models.CharField(max_length=100)
+    header_title = models.CharField(max_length=100, default="Sudalaiyandi", help_text="Text to display in the header/navigation bar")
     greetings_text = models.CharField(max_length=100)
     sub_heading = models.CharField(max_length=200, default="I am a Full Stack Developer")
     bio = models.TextField()
